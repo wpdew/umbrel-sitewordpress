@@ -1,0 +1,27 @@
+manifestVersion: 1
+id: umbrel-wordpress
+name: Wordpress
+tagline: The open source publishing platform of choice for millions of websites
+icon: https://svgshare.com/i/196o.svg
+category: social
+version: "1.0.0"
+description: >-
+  The open source publishing platform of choice for millions of websites worldwide—from creators and small businesses to enterprises.
+
+
+developer: Wpdew
+website: https://wpdew.com
+submitter: Wpdew
+submission: https://github.com/wpdew/umbrel-wordpress
+repo: https://github.com/wpdew/umbrel-wordpress
+support: https://github.com/wpdew/umbrel-wordpress/issues
+gallery:
+  - https://i.imgur.com/FCX9Xci.jpeg
+  - https://i.imgur.com/FCX9Xci.jpeg
+  - https://i.imgur.com/FCX9Xci.jpeg
+releaseNotes: >-
+  Add what's new in the latest version of your app here.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

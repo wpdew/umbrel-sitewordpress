@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: wordpress_server_2
+      APP_PORT: 8083
+
+  server:
+    image: wordpress:latest
+    platform: linux/arm64/v8
+    environment:
+      WORDPRESS_DB_HOST: db:"${APP_DBWORDPRESS_SSH_PORT}"
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    restart: always 
+    volumes:
+      - ${APP_DATA_DIR}/data/wordpress_data:/var/www/html
+      - ${APP_DATA_DIR}/data/wordpress_data/theme:/var/www/html/wp-content/themes
+      - ${APP_DATA_DIR}/data/wordpress_data/plugin:/var/www/html/wp-content/plugins
+      - ${APP_DATA_DIR}/data/wordpress_data/uploads:/var/www/html/wp-content/uploads
+      - ${APP_DATA_DIR}/data/wordpress_data/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    ports:
+      - "${APP_WORDPRESS_SSH_PORT}:${APP_WORDPRESS_SSH_PORT}"
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: mariadb:latest
+    platform: linux/arm64/v8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+    restart: always
+    volumes:
+      - ${APP_DATA_DIR}/data/db_data:/var/lib/mysql
+    ports:
+      - "${APP_DBWORDPRESS_SSH_PORT}:${APP_DBWORDPRESS_SSH_PORT}"
+
+  phpmyadmin:
+    image: arm64v8/phpmyadmin
+    platform: linux/arm64/v8
+    environment:
+      PMA_HOST: db
+      PMA_USER: exampleuser
+      PMA_PASSWORD: examplepass
+    restart: always 
+    ports:
+      - "${APP_PMA_PORT}:${APP_PMA_PORT}"
+    depends_on:
+      - db
+
+volumes:
+  wordpress_data:
+  db_data:
