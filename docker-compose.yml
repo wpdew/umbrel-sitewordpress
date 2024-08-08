@@ -6,7 +6,7 @@ services:
       APP_HOST: wordpress_server_2
       APP_PORT: 8083
 
-  server:
+  wordpress:
     image: wordpress:latest
     platform: linux/arm64/v8
     environment:
